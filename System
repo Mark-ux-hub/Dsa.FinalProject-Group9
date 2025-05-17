@@ -1,0 +1,72 @@
+resorts = {
+    1: {'name': 'RedDoorz near SM Batangas City', 'price': 918},
+    2: {'name': 'Meaco Royal Hotel-Batangas City', 'price': 2300},
+    3: {'name': 'Pontefino Hotel and Residences', 'price': 4000}
+}
+reservation = []
+print("WELCOME TO STAYWISE: HOTEL BOOKING SYSTEM")
+name = input("NAME: ")
+address = input("ADDRESS: ")
+pax = int(input("PAX: "))
+date_in = input("DATE IN: ")
+date_out = input("DATE OUT: ")
+while True:
+    print("[1] Hotel")
+    print("[2] View Bookings")
+    print("[3] Payment")
+    print("[4] Cancel Reservation")
+    print("[5] Out")
+    number = int(input("Enter a number: "))
+    if number == 1:
+        print("Available Hotel: ")
+        for num, info in resorts.items():
+            print(f"{num} - {info['name']} - ${info['price']}")
+        enter = int(input("Hotel number: "))
+        if enter in resorts:
+            reservation.append(resorts[enter])
+            print(f"{resorts[enter]['name']} - {resorts[enter]['price']} successfully added to reservation!")
+
+    elif number == 2:
+        if reservation:
+            print("Your Reservation: ")
+            for reserved in reservation:
+               print(f"{reserved['name']} - $ {reserved['price']}")
+        else:
+            print("There's no reservation yet!")
+    elif number == 3:
+        print("--PAYMENT--")
+        for reserved in reservation:
+            print(f"{reserved['name']} - {reserved['price']}")
+            do = input("Do you want to pay the bill? y/n")
+            if do == 'y':
+                payment = int(input("Pay the amount: "))
+                if payment > reserved['price']:
+                    print("Payment successfully paid.")
+                    print("note: if you get the your reservation will automatic be deleted")
+                    reciept = input("Do you want to get the receipt: ")
+                    if reciept == 'y':
+                        print("----- RECEIPT -----")
+                        for reserved in reservation:
+                            print(f"  NAME: {name}")
+                            print(f"  ADDRESS: {address}")
+                            print(f"  PAX: {pax}")
+                            print(f"  {reserved['name']} - ${reserved['price']}")
+                            print(f"  DATE IN: {date_in}")
+                            print(f"  DATE OUT: {date_out}")
+                            reservation.remove(reserved)
+                    else:
+                        print("Thanku!")
+                else:
+                    print("Not enough amount.")
+            else:
+                print("Please comeback later.")
+    elif number == 4:
+        remove = input("Do you want to remove the reservation? y/n ")
+        if remove == 'y':
+            reservation.clear()
+            print("Successfully removed the reservation.")
+        else:
+            print("You don't have reservation yet.")
+    elif number == 5:
+        print("Logging out")
+        break
